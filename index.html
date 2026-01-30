@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ARCHIM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto Slab', sans-serif;
+      text-align: center;
+  background-image: url("atardecer playa.jpg");
+  background-size: cover;      /* Ajusta la imagen al tamaño de la pantalla */
+  background-position: center; /* Centra la imagen */
+  background-attachment: fixed; /* Hace que el fondo no se mueva al hacer scroll */
+  color: #060270;
+}
+    #controls {
+      margin: 20px;
+}
+#progress {
+  width: 60%;
+  margin: 30px auto;
+  height: 8px;
+  background: #333;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Fondo transparente */
+  background-color: rgba(255, 255, 255, 0.55); /* blanco con 55% opacidad */
+  color: #fff; /* texto blanco */
+}
+#progress-bar {
+  height: 100%;
+  background: #ffffff; /* blanco Spotify */
+  width: 0%;
+  border-radius: 5px;
+}
+
+#progress-handle {
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  transition: left 0.1s linear;
+}
+#time-container {
+  display: flex;
+  justify-content: space-between;
+  width: 914px;        /* ancho fijo más pequeño */
+  margin: 5px auto;    /* centrado */
+  font-size: 14px;
+  color: #fff;
+}
+ button {
+  width: 60px;
+  height: 60px;
+  background-color: #FFFFFF;   /* Blanco Spotify */
+  color: #000000;                 /* Texto negro */
+  border: none;                /* Sin borde */
+  padding: 20px 20px;          /* Espaciado interno */
+  font-size: 16px;             /* Tamaño de letra */
+  border-radius: 50px;         /* Bordes redondos */
+  cursor: pointer;             /* Cambia el cursor al pasar */
+  font-weight: bold;           /* Texto más marcado */
+  transition: all 0.3s ease;   /* Animación suave */
+  margin: 0 10px; /* separa los botones horizontalmente */
+}
+
+button:hover {
+  background-color: #CECECE;   /* Gris al pasar */
+  transform: scale(1.05);      /* Se agranda un poco */
+}
+#search {
+  width: 300px;              /* ancho del buscador */
+  height: 15px;
+  padding: 10px;             /* espacio interno */
+  border: 1px solid #ccc;    /* borde gris claro */
+  border-radius: 25px;       /* bordes redondeados */
+  outline: none;             /* quita el borde azul al hacer clic */
+  font-size: 14px;           /* tamaño de texto */
+/* Fondo transparente */
+  background-color: rgba(255, 255, 255, 0.3); /* blanco con 30% opacidad */
+  color: #fff; /* texto blanco */
+}
+
+#search::placeholder {
+  color: #ddd; /* color del texto del placeholder */
+}
+#search:focus {
+  border-color: #1DB954;     /* verde estilo Spotify al seleccionar */
+  box-shadow: 0 0 5px #1DB954; /* sombra verde suave */
+}
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    li:hover {
+      color: #CC6CE7;
+    }
+  </style>
+</head>
+<body>
+  <h1>ARCHIM MUSIC</h1>
+  
+  <audio id="player"></audio>
+
+  <div id="progress" onclick="setProgress(event)">
+    <div id="progress-bar"></div>
+  <div id="progress-handle"></div>
+  </div>
+  <div id="time-container">
+    <span id="current-time">00:00</span>
+    <span id="total-time">00:00</span>
+  </div>
+<div id="controls">
+    <button onclick="randomSong()">⇋ </button>
+    <button onclick="prevSong()">⏮ </button>
+    <button onclick="playSong()">▶ </button>
+    <button onclick="pauseSong()">⏸ </button>
+    <button onclick="nextSong()">⏭ </button>
+  </div>
+
+  <input type="text" id="search" placeholder="Buscar canción..." onkeyup="searchSong()">
+<ul id="playlist">
+</ul>
+
+  <h2>Playlist</h2>
+  <ul id="playlist">
+    <li onclick="selectSong(0)">Yo te quise como a nadie</li>
+    <li onclick="selectSong(1)">La corona</li>
+    <li onclick="selectSong(2)">Tommy shelby</li>
+    <li onclick="selectSong(3)">Pecado</li>
+    <li onclick="selectSong(4)">Uma um</li>
+    <li onclick="selectSong(5)">Ice on my teeth</li>
+    <li onclick="selectSong(6)">Battlefield 2042</li>
+    <li onclick="selectSong(7)">In your fantasy</li>
+    <li onclick="selectSong(8)">Whiplash</li>
+    <li onclick="selectSong(9)">Fantasmas</li>
+    <li onclick="selectSong(10)">Triple lavada (remix)</li>
+    <li onclick="selectSong(11)">Infinita</li>
+    <li onclick="selectSong(12)">Blind</li>
+    <li onclick="selectSong(13)">Guerrilla</li>
+    <li onclick="selectSong(14)">Fireworks</li>
+    <li onclick="selectSong(15)">Bouncy</li>
+    <li onclick="selectSong(16)">Creep</li>
+    <li onclick="selectSong(17)">Anónimo</li>
+    <li onclick="selectSong(18)">Apocalipsis minecraft</li>
+    <li onclick="selectSong(19)">creeper vs zomibie (remix)</li>
+    <li onclick="selectSong(20)">titans</li>
+    <li onclick="selectSong(21)">como pacman</li>
+    <li onclick="selectSong(22)">cypher</li>
+  </ul>
+  
+  <script>
+    const songs = ["Cyclo - YO TE QUISE COMO A NADIE.mp3", "Cyclo - La Corona.mp3", "Cyclo - Tommy Shelby.mp3", "Pecado.mp3", "Uma Um.mp3", "ATEEZ - Ice On My Teeth.mp3", "BATTLEFIELD 2042 RAP ｜ KRONNO, ZARCORT, CYCLO & PITER G ｜ ( Videoclip Oficial ).mp3", 
+    "ATEEZ_ In Your Fantasy.mp3", "Crankdat - Whiplash (feat. SOFI).mp3", "HUMBE - fantasmas.mp3", "Esau Ortíz, Luis R Conriquez, Oscar Maydon, Alemán feat. Victor Mendivil - Triple Lavada (Remix).mp3", "Cyclo - Infinita.mp3", "Blind.mp3", "Guerrilla.mp3",
+  "Fireworks (I'm The One).mp3", "BOUNCY (K-HOT CHILLI PEPPERS).mp3", "Creep (SAN).mp3", "ANÓNIMO - MARIO BAUTISTA ft. KAROL SEVILLA. (Version Karol).mp3", "Apocalipsis Minecraft.mp3", "CREEPER VS ZOMBIE REMIX ｜ Prod. Willi.Ch [VERSION A].mp3", 
+"Excision & Wooli - Titans ｜ Official Visualizer.mp3", "Alemán, Gera MX - Como Pacman (Lyric Video).mp3", "Cypher - Rich Vagos x ALZADA.mp3"];
+    let currentSong = 0;
+    const player = document.getElementById("player");
+    const progressBar = document.getElementById("progress-bar");
+player.addEventListener("timeupdate", () => {
+  const progress = (player.currentTime / player.duration) * 100;
+  progressBar.style.width = progress + "%";
+
+  // Actualizar tiempo
+  document.getElementById("time").textContent = 
+    formatTime(player.currentTime) + " / " + formatTime(player.duration);
+});
+
+function formatTime(seconds) {
+  if (isNaN(seconds)) return "00:00";
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return (
+    (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs
+  );
+}
+    function searchSong() {
+  const input = document.getElementById("search").value.toLowerCase();
+  const items = document.querySelectorAll("#playlist li");
+
+  items.forEach((item) => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(input)) {
+      item.style.display = "";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
+    function prevSong() {
+  currentSong = (currentSong - 1 + songs.length) % songs.length;
+  loadSong(currentSong);
+}
+
+    function loadSong(index) {
+      currentSong = index;
+      player.src = songs[index];
+      player.play();
+    }
+
+    function playSong() {
+      if (!player.src) loadSong(0);
+      else player.play();
+    }
+
+    function pauseSong() {
+      player.pause();
+    }
+
+    function nextSong() {
+      currentSong = (currentSong + 1) % songs.length;
+      loadSong(currentSong);
+    }
+
+    function selectSong(index) {
+      loadSong(index);
+    }
+
+    player.addEventListener("timeupdate", () => {
+      const progress = (player.currentTime / player.duration) * 100;
+      progressBar.style.width = progress + "%";
+    document.getElementById("progress-handle").style.left = progress + "%";
+
+  document.getElementById("current-time").textContent = formatTime(player.currentTime);
+  document.getElementById("total-time").textContent = formatTime(player.duration);
+});
+
+function formatTime(seconds) {
+  if (isNaN(seconds)) return "00:00";
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return (
+    (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs
+  );
+}
+
+    function setProgress(event) {
+      const width = event.currentTarget.clientWidth;
+      const clickX = event.offsetX;
+      const duration = player.duration;
+      player.currentTime = (clickX / width) * duration;
+    }
+    let shuffle = false; // Estado del modo aleatorio
+
+function randomSong() {
+  shuffle = !shuffle; // Activa o desactiva el modo aleatorio
+  if (shuffle) {
+    alert("Modo aleatorio activado 🔀");
+  } else {
+    alert("Modo aleatorio desactivado ▶️");
+  }
+}
+
+// Cuando termina una canción
+player.addEventListener("ended", () => {
+  if (shuffle) {
+    const randomIndex = Math.floor(Math.random() * songs.length);
+    loadSong(randomIndex);
+  } else {
+    nextSong(); // sigue el orden normal
+  }
+});
+player.addEventListener("timeupdate", () => {
+  const progress = (player.currentTime / player.duration) * 100;
+  progressBar.style.width = progress + "%";
+  document.getElementById("progress-handle").style.left = progress + "%";
+});
+  </script>
+</body>
+</html>

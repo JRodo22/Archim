@@ -132,8 +132,6 @@ button:hover {
   </div>
 
   <input type="text" id="search" placeholder="Buscar canción..." onkeyup="searchSong()">
-<ul id="playlist">
-</ul>
 
   <h2>Playlist</h2>
   <ul id="playlist">
@@ -163,22 +161,19 @@ button:hover {
   </ul>
   
   <script>
-    const songs = ["Cyclo - YO TE QUISE COMO A NADIE.mp3", "Cyclo - La Corona.mp3", "Cyclo - Tommy Shelby.mp3", "Pecado.mp3", "Uma Um.mp3", "ATEEZ - Ice On My Teeth.mp3", "BATTLEFIELD 2042 RAP ｜ KRONNO, ZARCORT, CYCLO & PITER G ｜ ( Videoclip Oficial ).mp3", 
-    "ATEEZ_ In Your Fantasy.mp3", "Crankdat - Whiplash (feat. SOFI).mp3", "HUMBE - fantasmas.mp3", "Esau Ortíz, Luis R Conriquez, Oscar Maydon, Alemán feat. Victor Mendivil - Triple Lavada (Remix).mp3", "Cyclo - Infinita.mp3", "Blind.mp3", "Guerrilla.mp3",
-  "Fireworks (I'm The One).mp3", "BOUNCY (K-HOT CHILLI PEPPERS).mp3", "Creep (SAN).mp3", "ANÓNIMO - MARIO BAUTISTA ft. KAROL SEVILLA. (Version Karol).mp3", "Apocalipsis Minecraft.mp3", "CREEPER VS ZOMBIE REMIX ｜ Prod. Willi.Ch [VERSION A].mp3", 
-"Excision & Wooli - Titans ｜ Official Visualizer.mp3", "Alemán, Gera MX - Como Pacman (Lyric Video).mp3", "Cypher - Rich Vagos x ALZADA.mp3"];
+    const songs = [
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789905/Cyclo_-_YO_TE_QUISE_COMO_A_NADIE_iyw0ut.mp3", 
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789893/Cyclo_-_La_Corona_tdj5vc.mp3", 
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789891/Cyclo_-_Tommy_Shelby_mek0yh.mp3", 
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789943/Pecado_itqe7l.mp3", 
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789943/Uma_Um_lcfqgx.mp3", 
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789808/ATEEZ_-_Ice_On_My_Teeth_gnfhed.mp3", 
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789840/BATTLEFIELD_2042_RAP_KRONNO_ZARCORT_CYCLO_PITER_G_Videoclip_Oficial_uwrawv.mp3",
+    "https://res.cloudinary.com/dctwmri02/video/upload/v1769789816/ATEEZ__In_Your_Fantasy_br7epg.mp3",
+    ];
     let currentSong = 0;
     const player = document.getElementById("player");
     const progressBar = document.getElementById("progress-bar");
-player.addEventListener("timeupdate", () => {
-  const progress = (player.currentTime / player.duration) * 100;
-  progressBar.style.width = progress + "%";
-
-  // Actualizar tiempo
-  document.getElementById("time").textContent = 
-    formatTime(player.currentTime) + " / " + formatTime(player.duration);
-});
-
 function formatTime(seconds) {
   if (isNaN(seconds)) return "00:00";
   const minutes = Math.floor(seconds / 60);
@@ -238,16 +233,6 @@ function formatTime(seconds) {
   document.getElementById("current-time").textContent = formatTime(player.currentTime);
   document.getElementById("total-time").textContent = formatTime(player.duration);
 });
-
-function formatTime(seconds) {
-  if (isNaN(seconds)) return "00:00";
-  const minutes = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return (
-    (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs
-  );
-}
-
     function setProgress(event) {
       const width = event.currentTarget.clientWidth;
       const clickX = event.offsetX;
